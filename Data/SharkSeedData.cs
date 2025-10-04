@@ -10,6 +10,32 @@ namespace sharks.Data
             {
                 new Shark
                 {
+                    Id = 1,
+                    Name = "Jaws",
+                    TagId = "TAG-100",
+                    Gender = "Female",
+                    Length = 3.2,
+                    Weight = 580.0,
+                    TaggedDate = new DateTime(2024, 5, 12),
+                    TaggedLocation = "Australia, Port Lincoln",
+                    Notes = "Tiburón tigre juvenil con comportamiento activo",
+                    SharkSpeciesId = 2 // Tiburón Tigre
+                },
+                new Shark
+                {
+                    Id = 2,
+                    Name = "Lemon Drop",
+                    TagId = "TAG-200",
+                    Gender = "Male",
+                    Length = 2.1,
+                    Weight = 75.0,
+                    TaggedDate = new DateTime(2024, 3, 8),
+                    TaggedLocation = "Bahamas, Bimini",
+                    Notes = "Tiburón limón joven en excelentes condiciones",
+                    SharkSpeciesId = 3 // Tiburón Limón
+                },
+                new Shark
+                {
                     Id = 3,
                     Name = "Bruce",
                     TagId = "TAG-001",
