@@ -1,6 +1,74 @@
 @sharks_HostAddress = http://localhost:5093
 
+# Weather Forecast (Original endpoint)
 GET {{sharks_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+# Get all shark species
+GET {{sharks_HostAddress}}/api/sharks/species
+Accept: application/json
+
+###
+
+# Get specific shark species by ID
+GET {{sharks_HostAddress}}/api/sharks/species/1
+Accept: application/json
+
+###
+
+# Get sample shark data with tracking
+GET {{sharks_HostAddress}}/api/sharks/sample-data
+Accept: application/json
+
+###
+
+# Get tracking data for a specific shark
+GET {{sharks_HostAddress}}/api/sharks/3/tracking
+Accept: application/json
+
+###
+
+# Get all tracking data
+GET {{sharks_HostAddress}}/api/tracking
+Accept: application/json
+
+###
+
+# Get specific tracking record by ID
+GET {{sharks_HostAddress}}/api/tracking/1
+Accept: application/json
+
+###
+
+# Get tracking data by shark ID
+GET {{sharks_HostAddress}}/api/tracking/shark/3
+Accept: application/json
+
+###
+
+# Get tracking data by date range
+GET {{sharks_HostAddress}}/api/tracking/daterange?startDate=2013-12-01&endDate=2014-08-01
+Accept: application/json
+
+###
+
+# Create new tracking record
+POST {{sharks_HostAddress}}/api/tracking
+Content-Type: application/json
+
+{
+    "sharkId": 3,
+    "latitude": -34.5,
+    "longitude": 20.0,
+    "trackingDateTime": "2024-10-04T10:30:00",
+    "temperature": 19.5,
+    "depth": 35.0,
+    "speed": 2.8,
+    "batteryLevel": "90%",
+    "signalStrength": "Strong",
+    "notes": "Regular tracking update"
+}
 
 ###

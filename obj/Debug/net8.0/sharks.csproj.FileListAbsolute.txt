@@ -30,3 +30,4 @@ C:\HACKATON\sharks\obj\Debug\net8.0\refint\sharks.dll
 C:\HACKATON\sharks\obj\Debug\net8.0\sharks.pdb
 C:\HACKATON\sharks\obj\Debug\net8.0\sharks.genruntimeconfig.cache
 C:\HACKATON\sharks\obj\Debug\net8.0\ref\sharks.dll
+C:\HACKATON\sharks\obj\Debug\net8.0\sharks.sourcelink.json
