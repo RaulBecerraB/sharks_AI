@@ -1,83 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
-using sharks.Models;
+using sharks.DTOs;
+using sharks.Services;
 
 namespace sharks.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class TrackingController : ControllerBase
     {
+        private readonly ISharkTrackingService _trackingService;
         private readonly ILogger<TrackingController> _logger;
 
-        public TrackingController(ILogger<TrackingController> logger)
+        public TrackingController(ISharkTrackingService trackingService, ILogger<TrackingController> logger)
         {
+            _trackingService = trackingService;
             _logger = logger;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<SharkTracking>> GetAllTracking()
-        {
-            // Datos de ejemplo basados en el CSV proporcionado
-            var trackingData = new List<SharkTracking>
-            {
-                new SharkTracking { Id = 1, SharkId = 3, Latitude = -34.60661m, Longitude = 21.15244m, TrackingDateTime = DateTime.Parse("2014-07-06 04:57:28") },
-                new SharkTracking { Id = 2, SharkId = 3, Latitude = -34.78752m, Longitude = 19.42479m, TrackingDateTime = DateTime.Parse("2014-06-23 02:40:09") },
-                new SharkTracking { Id = 3, SharkId = 3, Latitude = -34.42487m, Longitude = 21.09754m, TrackingDateTime = DateTime.Parse("2014-06-15 13:15:44") },
-                new SharkTracking { Id = 4, SharkId = 3, Latitude = -34.70432272m, Longitude = 20.21013441m, TrackingDateTime = DateTime.Parse("2014-06-03 02:23:57") },
-                new SharkTracking { Id = 5, SharkId = 3, Latitude = -34.65556m, Longitude = 19.37459m, TrackingDateTime = DateTime.Parse("2014-05-28 19:53:57") },
-                new SharkTracking { Id = 6, SharkId = 3, Latitude = -34.63245m, Longitude = 19.42612m, TrackingDateTime = DateTime.Parse("2014-04-11 00:56:06") },
-                new SharkTracking { Id = 7, SharkId = 3, Latitude = -34.62952m, Longitude = 19.42943m, TrackingDateTime = DateTime.Parse("2014-04-10 03:04:58") },
-                new SharkTracking { Id = 8, SharkId = 3, Latitude = -34.62948m, Longitude = 19.42926m, TrackingDateTime = DateTime.Parse("2014-04-10 01:11:30") },
-                new SharkTracking { Id = 9, SharkId = 3, Latitude = -34.64901797m, Longitude = 20.29276432m, TrackingDateTime = DateTime.Parse("2014-01-16 04:30:50") },
-                new SharkTracking { Id = 10, SharkId = 3, Latitude = -34.66521297m, Longitude = 20.26497576m, TrackingDateTime = DateTime.Parse("2014-01-10 13:20:14") },
-                new SharkTracking { Id = 11, SharkId = 3, Latitude = -34.81799m, Longitude = 20.23152m, TrackingDateTime = DateTime.Parse("2014-01-08 01:23:54") },
-                new SharkTracking { Id = 12, SharkId = 3, Latitude = -34.71725348m, Longitude = 20.13079566m, TrackingDateTime = DateTime.Parse("2013-12-28 00:04:59") },
-                new SharkTracking { Id = 13, SharkId = 3, Latitude = -34.71818947m, Longitude = 20.12474436m, TrackingDateTime = DateTime.Parse("2013-12-27 14:15:25") },
-                new SharkTracking { Id = 14, SharkId = 3, Latitude = -34.72023786m, Longitude = 20.11244288m, TrackingDateTime = DateTime.Parse("2013-12-26 08:43:24") },
-                new SharkTracking { Id = 15, SharkId = 3, Latitude = -34.72199931m, Longitude = 20.11298288m, TrackingDateTime = DateTime.Parse("2013-12-26 07:55:39") }
-            };
-
-            return Ok(trackingData);
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<SharkTracking> GetTrackingById(int id)
-        {
-            // En una implementación real, esto vendría de una base de datos
-            var tracking = new SharkTracking
-            {
-                Id = id,
-                SharkId = 3,
-                Latitude = -34.60661m,
-                Longitude = 21.15244m,
-                TrackingDateTime = DateTime.Parse("2014-07-06 04:57:28")
-            };
-
-            return Ok(tracking);
-        }
-
+        /// <summary>
+        /// Obtiene todos los datos de tracking de un tiburón específico
+        /// </summary>
         [HttpGet("shark/{sharkId}")]
-        public ActionResult<IEnumerable<SharkTracking>> GetTrackingBySharkId(int sharkId)
+        public async Task<ActionResult<IEnumerable<SharkTrackingDto>>> GetTrackingBySharkId(int sharkId)
         {
-            var trackingData = GetAllTracking().Value?.Where(t => t.SharkId == sharkId);
-            return Ok(trackingData);
-        }
-
-        [HttpGet("daterange")]
-        public ActionResult<IEnumerable<SharkTracking>> GetTrackingByDateRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            var allTracking = GetAllTracking().Value;
-            var filteredData = allTracking?.Where(t => t.TrackingDateTime >= startDate && t.TrackingDateTime <= endDate);
-            return Ok(filteredData);
-        }
-
-        [HttpPost]
-        public ActionResult<SharkTracking> CreateTracking([FromBody] SharkTracking tracking)
-        {
-            // En una implementación real, esto se guardaría en la base de datos
-            tracking.Id = new Random().Next(1000, 9999);
-            _logger.LogInformation($"New tracking record created for shark {tracking.SharkId} at {tracking.TrackingDateTime}");
-            return CreatedAtAction(nameof(GetTrackingById), new { id = tracking.Id }, tracking);
+            try
+            {
+                var trackingData = await _trackingService.GetTrackingBySharkIdAsync(sharkId);
+                return Ok(trackingData);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener tracking del tiburón {SharkId}", sharkId);
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
     }
 }
