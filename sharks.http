@@ -1,0 +1,6 @@
+@sharks_HostAddress = http://localhost:5093
+
+GET {{sharks_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
