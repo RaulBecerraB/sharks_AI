@@ -14,6 +14,10 @@ builder.Services.AddScoped<ISharkRepository, SharkRepository>();
 builder.Services.AddScoped<ISharkService, SharkService>();
 builder.Services.AddScoped<ISharkTrackingRepository, SharkTrackingRepository>();
 builder.Services.AddScoped<ISharkTrackingService, SharkTrackingService>();
+builder.Services.AddScoped<IPredictionService, PredictionService>();
+
+// Register HttpClient for prediction service
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

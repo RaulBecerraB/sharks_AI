@@ -20,5 +20,13 @@ namespace sharks.Repositories
                 .Include(s => s.TrackingData)
                 .ToListAsync();
         }
+
+        public async Task<Shark?> GetSharkByIdAsync(int id)
+        {
+            return await _context.Sharks
+                .Include(s => s.Species)
+                .Include(s => s.TrackingData)
+                .FirstOrDefaultAsync(s => s.Id == id);
+        }
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sharks")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f8bf81f32e99507a0b3107d3176bd6d94972f458")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0bc5fa04ca61658183332946daccbc6431d37ccd")]
 [assembly: System.Reflection.AssemblyProductAttribute("sharks")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sharks")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
