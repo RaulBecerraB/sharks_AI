@@ -50,8 +50,6 @@ namespace sharks.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Latitude).HasColumnType("decimal(10,8)");
                 entity.Property(e => e.Longitude).HasColumnType("decimal(11,8)");
-                entity.Property(e => e.Notes).HasMaxLength(200);
-                entity.Property(e => e.SignalStrength).HasMaxLength(10);
 
                 // Relación con Shark
                 entity.HasOne(e => e.Shark)
