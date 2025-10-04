@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sharks.Data;
 
@@ -11,9 +12,11 @@ using sharks.Data;
 namespace sharks.Migrations
 {
     [DbContext(typeof(SharksDbContext))]
-    partial class SharksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251004122837_AddSharkSeedData")]
+    partial class AddSharkSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,6 +210,10 @@ namespace sharks.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BatteryLevel")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<double?>("Depth")
                         .HasColumnType("float");

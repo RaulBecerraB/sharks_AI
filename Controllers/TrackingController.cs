@@ -54,7 +54,6 @@ namespace sharks.Controllers
                 Temperature = 18.5,
                 Depth = 45.2,
                 Speed = 3.2,
-                BatteryLevel = "85%",
                 SignalStrength = "Strong"
             };
 

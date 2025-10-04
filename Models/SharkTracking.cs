@@ -22,7 +22,6 @@ namespace sharks.Models
         public double? Depth { get; set; } // Profundidad en metros
         public double? Temperature { get; set; } // Temperatura del agua en °C
         public double? Speed { get; set; } // Velocidad en km/h
-        public string? BatteryLevel { get; set; } // Nivel de batería del dispositivo
         public string? SignalStrength { get; set; } // Fuerza de la señal
 
         [MaxLength(200)]

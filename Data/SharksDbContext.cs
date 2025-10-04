@@ -51,7 +51,6 @@ namespace sharks.Data
                 entity.Property(e => e.Latitude).HasColumnType("decimal(10,8)");
                 entity.Property(e => e.Longitude).HasColumnType("decimal(11,8)");
                 entity.Property(e => e.Notes).HasMaxLength(200);
-                entity.Property(e => e.BatteryLevel).HasMaxLength(10);
                 entity.Property(e => e.SignalStrength).HasMaxLength(10);
 
                 // Relación con Shark
@@ -124,6 +123,12 @@ namespace sharks.Data
                     ConservationStatus = "Vulnerable"
                 }
             );
+
+            // Datos semilla para tiburones
+            modelBuilder.Entity<Shark>().HasData(SharkSeedData.GetSharks().ToArray());
+
+            // Datos semilla para tracking de tiburones
+            modelBuilder.Entity<SharkTracking>().HasData(SharkSeedData.GetSharkTrackingData().ToArray());
         }
     }
 }
