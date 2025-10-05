@@ -19,7 +19,7 @@ namespace sharks.Repositories
                 .Include(st => st.Shark)
                 .ThenInclude(s => s.Species)
                 .Where(st => st.SharkId == sharkId)
-                .OrderByDescending(st => st.TrackingDateTime)
+                .OrderBy(st => st.TrackingDateTime)
                 .ToListAsync();
         }
     }
