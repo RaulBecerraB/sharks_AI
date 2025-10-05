@@ -119,10 +119,10 @@ namespace sharks.Services
             {
                 var requestDto = new PredictionRequestDto { Positions = positions };
 
-                // Usar PropertyNamingPolicy.CamelCase pero sin configuración especial
+                // Usar SnakeCaseLower para que coincida con lo que espera la API de ML
                 var jsonContent = JsonSerializer.Serialize(requestDto, new JsonSerializerOptions
                 {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
                     WriteIndented = true
                 });
 
