@@ -11,7 +11,7 @@ namespace sharks.Services
         private readonly ISharkRepository _sharkRepository;
         private readonly HttpClient _httpClient;
         private readonly ILogger<PredictionService> _logger;
-        private const string PREDICTION_API_URL = "http://localhost:8001/predict";
+        private const string PREDICTION_API_URL = "http://localhost:8001/predict/white-shark";
 
         public PredictionService(
             ISharkTrackingRepository trackingRepository,
@@ -45,7 +45,8 @@ namespace sharks.Services
                     .Select(t => new PositionDto
                     {
                         Latitude = (double)t.Latitude,
-                        Longitude = (double)t.Longitude
+                        Longitude = (double)t.Longitude,
+                        Chlor_A = (double)t.ChlorA
                     })
                     .Reverse() // Revertir para tener orden cronológico (más antigua primero)
                     .ToList();
@@ -85,6 +86,7 @@ namespace sharks.Services
                     {
                         Latitude = predictedPosition.Predicted_Latitude,
                         Longitude = predictedPosition.Predicted_Longitude,
+                        ChlorA = predictedPosition.Predicted_Chlor_A,
                         Iteration = i,
                         PredictedFor = DateTime.UtcNow.AddHours(i) // Estimamos que cada predicción es para la próxima hora
                     };
@@ -95,7 +97,8 @@ namespace sharks.Services
                     positionsForPrediction.Add(new PositionDto
                     {
                         Latitude = predictedPosition.Predicted_Latitude,
-                        Longitude = predictedPosition.Predicted_Longitude
+                        Longitude = predictedPosition.Predicted_Longitude,
+                        Chlor_A = predictedPosition.Predicted_Chlor_A
                     });
 
                     _logger.LogInformation("Completed prediction iteration {Iteration} for shark {SharkId}", i, sharkId);
@@ -127,7 +130,7 @@ namespace sharks.Services
 
                 _logger.LogInformation("Calling prediction API at {Url} with positions: {Positions}",
                     PREDICTION_API_URL,
-                    string.Join(", ", positions.Select(p => $"({p.Latitude}, {p.Longitude})")));
+                    string.Join(", ", positions.Select(p => $"({p.Latitude}, {p.Longitude}, {p.Chlor_A})")));
 
                 _logger.LogInformation("Request JSON: {Json}", jsonContent);
 
@@ -148,8 +151,8 @@ namespace sharks.Services
                             PropertyNameCaseInsensitive = true
                         });
 
-                    _logger.LogInformation("Prediction API returned: Lat={Lat}, Lon={Lon}",
-                        predictionResponse?.Predicted_Latitude, predictionResponse?.Predicted_Longitude);
+                    _logger.LogInformation("Prediction API returned: Lat={Lat}, Lon={Lon}, ChlorA={ChlorA}",
+                        predictionResponse?.Predicted_Latitude, predictionResponse?.Predicted_Longitude, predictionResponse?.Predicted_Chlor_A);
 
                     return predictionResponse;
                 }

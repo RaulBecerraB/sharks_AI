@@ -22,7 +22,8 @@ namespace sharks.Services
                 SharkName = st.Shark?.Name ?? "Unknown",
                 Latitude = st.Latitude,
                 Longitude = st.Longitude,
-                TrackingDateTime = st.TrackingDateTime
+                TrackingDateTime = st.TrackingDateTime,
+                ChlorA = st.ChlorA
             });
         }
     }

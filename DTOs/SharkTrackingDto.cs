@@ -8,5 +8,6 @@ namespace sharks.DTOs
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public DateTime TrackingDateTime { get; set; }
+        public decimal ChlorA { get; set; }
     }
 }

@@ -9,12 +9,14 @@ namespace sharks.DTOs
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public double Chlor_A { get; set; }
     }
 
     public class PredictionResponseDto
     {
         public double Predicted_Latitude { get; set; }
         public double Predicted_Longitude { get; set; }
+        public double Predicted_Chlor_A { get; set; }
     }
 
     public class SharkPredictionResultDto
@@ -29,6 +31,7 @@ namespace sharks.DTOs
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public double ChlorA { get; set; }
         public int Iteration { get; set; }
         public DateTime PredictedFor { get; set; }
     }

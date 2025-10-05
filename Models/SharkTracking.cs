@@ -18,6 +18,9 @@ namespace sharks.Models
 
         public DateTime TrackingDateTime { get; set; }
 
+        [Column(TypeName = "decimal(10, 7)")]
+        public decimal ChlorA { get; set; }
+
         // Relación con el tiburón
         [ForeignKey("SharkId")]
         public virtual Shark Shark { get; set; } = null!;
