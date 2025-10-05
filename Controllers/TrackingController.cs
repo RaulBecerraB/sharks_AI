@@ -70,5 +70,98 @@ namespace sharks.Controllers
                 return StatusCode(500, "Error interno del servidor");
             }
         }
+
+        /// <summary>
+        /// Predice las próximas posiciones de un tiburón blanco específicamente
+        /// </summary>
+        [HttpGet("white-shark/{sharkId}/predict")]
+        public async Task<ActionResult<SharkPredictionResultDto>> PredictWhiteSharkPositions(
+            int sharkId,
+            [FromQuery] int iterations = 1)
+        {
+            try
+            {
+                if (iterations <= 0 || iterations > 100)
+                {
+                    return BadRequest("Las iteraciones deben estar entre 1 y 100");
+                }
+
+                var prediction = await _predictionService.PredictWhiteSharkPositionsAsync(sharkId, iterations);
+
+                if (prediction == null)
+                {
+                    return NotFound($"No se pudo realizar la predicción para el tiburón blanco {sharkId}. Verifique que el tiburón existe y tiene al menos 5 posiciones de tracking.");
+                }
+
+                return Ok(prediction);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al predecir posiciones del tiburón blanco {SharkId}", sharkId);
+                return StatusCode(500, "Error interno del servidor");
+            }
+        }
+
+        /// <summary>
+        /// Predice las próximas posiciones de un tiburón limón específicamente
+        /// </summary>
+        [HttpGet("lemon-shark/{sharkId}/predict")]
+        public async Task<ActionResult<SharkPredictionResultDto>> PredictLemonSharkPositions(
+            int sharkId,
+            [FromQuery] int iterations = 1)
+        {
+            try
+            {
+                if (iterations <= 0 || iterations > 100)
+                {
+                    return BadRequest("Las iteraciones deben estar entre 1 y 100");
+                }
+
+                var prediction = await _predictionService.PredictLemonSharkPositionsAsync(sharkId, iterations);
+
+                if (prediction == null)
+                {
+                    return NotFound($"No se pudo realizar la predicción para el tiburón limón {sharkId}. Verifique que el tiburón existe y tiene al menos 5 posiciones de tracking.");
+                }
+
+                return Ok(prediction);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al predecir posiciones del tiburón limón {SharkId}", sharkId);
+                return StatusCode(500, "Error interno del servidor");
+            }
+        }
+
+        /// <summary>
+        /// Predice las próximas posiciones de un tiburón martillo específicamente
+        /// </summary>
+        [HttpGet("hammer-shark/{sharkId}/predict")]
+        public async Task<ActionResult<SharkPredictionResultDto>> PredictHammerSharkPositions(
+            int sharkId,
+            [FromQuery] int iterations = 1)
+        {
+            try
+            {
+                if (iterations <= 0 || iterations > 100)
+                {
+                    return BadRequest("Las iteraciones deben estar entre 1 y 100");
+                }
+
+                var prediction = await _predictionService.PredictHammerSharkPositionsAsync(sharkId, iterations);
+
+                if (prediction == null)
+                {
+                    return NotFound($"No se pudo realizar la predicción para el tiburón martillo {sharkId}. Verifique que el tiburón existe y tiene al menos 5 posiciones de tracking.");
+                }
+
+                return Ok(prediction);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al predecir posiciones del tiburón martillo {SharkId}", sharkId);
+                return StatusCode(500, "Error interno del servidor");
+            }
+        }
     }
 }
